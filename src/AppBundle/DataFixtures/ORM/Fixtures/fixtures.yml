@@ -1,0 +1,7 @@
+AppBundle\Entity\Post:
+  post_{1..30}:
+    postAuthor: <name()>
+    postTitle: <randomElement(array('ruby', 'rails', 'javascript', 'jQuery', 'symfony', 'laravel', 'cms'))>_<current()>
+    postContent: <sentence(50)>
+    postImage: ruby<current()>
+    postDate: <dateTimeBetween("-200 days", "now")>
