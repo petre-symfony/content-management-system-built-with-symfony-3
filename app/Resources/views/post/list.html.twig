@@ -5,7 +5,7 @@
     <h2>{{ post.postTitle }}</h2>
     <p class="lead">{{ post.postAuthor }}</p>
     <p><span class="glyphicon glyphicon-time"></span>{{ post.postDate|date('Y-m-d') }}</p>
-    <img src="http://placehold.it/900x300" alt="" class="img-responsive" />
+    <img src="http://localhost:8000/images/{{ post.postImage }}.jpg" alt="" class="img-responsive" />
     <p>{{ post.postContent }}</p>
     <a href="#" class="btn btn-primary">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
   {% else %}
