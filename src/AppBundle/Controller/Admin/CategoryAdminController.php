@@ -10,7 +10,7 @@ use AppBundle\Entity\Category;
  */
 class CategoryAdminController extends Controller{
   /**
-   * @Route("/", name="admin_category_list")
+   * @Route("/", name="admin_list_categories")
    * @Method("GET")
    */
   public function listAction(){
