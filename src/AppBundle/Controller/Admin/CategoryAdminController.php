@@ -19,12 +19,14 @@ class CategoryAdminController extends Controller{
   public function listAction(){
     $em = $this->getDoctrine()->getManager();
     $repository = $em->getRepository('AppBundle:Category');
+    $form = $this->createForm(CategoryFormType::class);
     
     $categories = $repository->findAll();
     
     return $this->render(
       'admin/category/list.html.twig',
       array(
+        'categoryForm' => $form->createView(),   
         'categories' => $categories    
       )
     ); 
@@ -61,6 +63,7 @@ class CategoryAdminController extends Controller{
   
   /**
    * @Route("/category/{catTitle}/edit", name="admin_category_edit")
+   * @Method({"GET", "POST"})
    * 
    */
   public function editAction(Request $request, $catTitle){

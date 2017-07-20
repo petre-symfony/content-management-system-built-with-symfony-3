@@ -13,7 +13,7 @@
         <h3>Add New Category</h3>
         {{ render(controller('AppBundle\\Controller\\Admin\\CategoryAdminController::newAction' )) }}
         
-        
+        <div id="display_edit_form"></div>
       </div><!-- col-xs-6 -->
       
       <div class="col-xs-6">
@@ -32,7 +32,7 @@
                 <td>{{ category.catTitle }}</td>
                 <td>
                   <a href="{{ path('admin_category_delete', {'catTitle': category.catTitle}) }}">Delete</a>
-                  <a href="{{ path('admin_category_edit', {'catTitle': category.catTitle}) }}">Edit</a>
+                  <a href="{{ path('admin_category_edit', {'catTitle': category.catTitle}) }}" class="js-category-edit" data-edit="{{ category.catTitle }}">Edit</a>
                 </td>
               </tr>
             {% else %}
@@ -47,4 +47,29 @@
       </div><!-- col-xs-6 -->
     </div><!-- col-lg-12 -->
   </div><!-- row -->
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  <script type="text/template" id="admin-category-edit-template">
+    {{ include("admin/category/_form.html.twig") }}
+  </script>
+  <script type="text/javascript">
+    $(function(){    
+      $('table').on('click', '.js-category-edit', function(event){
+        event.preventDefault();
+        var html = $('#admin-category-edit-template').html();
+        $('#display_edit_form').html(html);
+        $("#display_edit_form").find('form').attr("action","category/"+$(this).data('edit')+"/edit");
+        $("#display_edit_form").find('form input[type="text"]').attr('value', $(this).data('edit'));
+        $("#display_edit_form").prepend("<h3>Edit "+ $(this).data('edit') + " Category</h3>");
+        $("#display_edit_form").find('form input[type="submit"]').wrap("<div class='btn-group'></div>");
+        $("#display_edit_form").find('.btn-group').append('<input type="submit" class="btn btn-primary" value="Cancel"/>');
+        $("#display_edit_form").on('submit', 'form input[type="submit"][value="Cancel"]', function(event){
+          event.preventDefault();
+          $("#display_edit_form").fadeIn("fast");
+        })
+      });
+    });
+  </script>
 {% endblock %}
