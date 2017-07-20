@@ -57,4 +57,25 @@ class CategoryAdminController extends Controller{
       )
     );
   }
+  
+  
+  /**
+   * @Route("/category/{catTitle}/delete", name="admin_category_delete")
+   * 
+   */
+  public function deleteAction($catTitle){
+    $em = $this->getDoctrine()->getManager();
+    $repository = $em->getRepository('AppBundle:Category');
+    
+    $category = $repository->findOneBy(['catTitle' => $catTitle ]); 
+    
+    if(!$category){
+      throw $this->createNotFoundException('Cannot find this category');
+    }
+    
+    $em->remove($category);
+    $em->flush();
+    
+    return $this->redirectToRoute('admin_list_categories');
+  }
 }
