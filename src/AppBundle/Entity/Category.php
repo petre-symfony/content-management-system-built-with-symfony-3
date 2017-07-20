@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Category
@@ -23,8 +24,8 @@ class Category
 
     /**
      * @var string
-     *
      * @ORM\Column(name="cat_title", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $catTitle;
 
