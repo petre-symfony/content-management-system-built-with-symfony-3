@@ -60,6 +60,37 @@ class CategoryAdminController extends Controller{
   
   
   /**
+   * @Route("/category/{catTitle}/edit", name="admin_category_edit")
+   * 
+   */
+  public function editAction(Request $request, $catTitle){
+    $em = $this->getDoctrine()->getManager();
+    $repository = $em->getRepository('AppBundle:Category');
+    
+    $category = $repository->findOneBy(['catTitle' => $catTitle ]); 
+    
+    if(!$category){
+      throw $this->createNotFoundException('Cannot find this category');
+    }
+    
+    $form = $this->createForm(CategoryFormType::class, $category);
+    // only handles data on POST
+    $form->handleRequest($request);
+    if ($form->isSubmitted() && $form->isValid()) {
+      $category = $form->getData();
+      
+      $em->persist($category);
+      $em->flush();
+      
+      return $this->redirectToRoute('admin_list_categories');
+    }
+    
+    return $this->render('admin/category/edit.html.twig', [
+      'categoryForm' => $form->createView()    
+    ]);
+  }
+  
+  /**
    * @Route("/category/{catTitle}/delete", name="admin_category_delete")
    * 
    */
