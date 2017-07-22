@@ -48,6 +48,7 @@ class CategoryAdminController extends Controller{
       $em = $this->getDoctrine()->getManager();
       $em->persist($category);
       $em->flush();
+      $this->addFlash('success', 'Category created');
       
       return $this->redirectToRoute('admin_list_categories');
     }
@@ -72,9 +73,13 @@ class CategoryAdminController extends Controller{
     
     $category = $repository->findOneBy(['catTitle' => $catTitle ]); 
     
+    
     if(!$category){
-      throw $this->createNotFoundException('Cannot find this category');
+      $this->addFlash('failed', 'Not found category ' . $catTitle);
+      return $this->redirectToRoute('admin_list_categories');
     }
+    
+    $initialCategoryName = $category->getCatTitle();
     
     $form = $this->createForm(CategoryFormType::class, $category);
     // only handles data on POST
@@ -84,6 +89,7 @@ class CategoryAdminController extends Controller{
       
       $em->persist($category);
       $em->flush();
+      $this->addFlash('success', 'Category ' . $initialCategoryName . ' changed');
       
       return $this->redirectToRoute('admin_list_categories');
     }
@@ -104,11 +110,13 @@ class CategoryAdminController extends Controller{
     $category = $repository->findOneBy(['catTitle' => $catTitle ]); 
     
     if(!$category){
-      throw $this->createNotFoundException('Cannot find this category');
+      $this->addFlash('failed', 'Not found category ' . $catTitle);
+      return $this->redirectToRoute('admin_list_categories');
     }
     
     $em->remove($category);
     $em->flush();
+    $this->addFlash('success', 'Category '. $category->getCatTitle() . ' deleted');
     
     return $this->redirectToRoute('admin_list_categories');
   }
