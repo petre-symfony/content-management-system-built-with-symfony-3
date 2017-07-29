@@ -1,7 +1,76 @@
+AppBundle\Entity\Category:
+  category_ruby:
+    catTitle: ruby
+  category_rails:
+    catTitle: rails 
+  category_javascript:
+    catTitle: javascript
+  category_jQuery:
+    catTitle: jQuery
+  category_symfony:
+    catTitle: symfony
+  category_laravel:
+    catTitle: laravel
+  category_cms:
+    catTitle: cms
+  category_ajax:
+    catTitle: ajax
+  category_python:
+    catTitle: python
+  category_django:
+    catTitle: django 
+  category_drupal:
+    catTitle: drupal
+  category_php:
+    catTitle: php
+    
+    
+AppBundle\Entity\Tag:
+  tag_ruby:
+    tagName: ruby
+  tag_rails:
+    tagName: rails 
+  tag_javascript:
+    tagName: javascript 
+  tag_jQuery:
+    tagName: jQuery 
+  tag_symfony:
+    tagName: symfony
+  tag_laravel:
+    tagName: laravel
+  tag_cms:
+    tagName: cms
+  tag_ajax:
+    tagName: ajax
+  tag_python:
+    tagName: python 
+  tag_django:
+    tagName: django 
+  tag_drupal:
+    tagName: drupal 
+  tag_php:
+    tagName: php
+  tag_web_framework: 
+    tagName: Web framework
+  tag_MVC:
+    tagName: MVC
+  tag_server_script_programming:
+    tagName: Server Script Programming
+  tag_web_client_programming:
+    tagName: Client Browser Programming
+  tag_asynchronous_javascript:
+    tagName: Asynchronous Javascript
+  tag_programming_language:
+    tagName: Programming Language
+
 AppBundle\Entity\Post:
-  post_{1..30}:
+  post_{1..50}:
     postAuthor: <name()>
-    postTitle: <randomElement(array('ruby', 'rails', 'javascript', 'jQuery', 'symfony', 'laravel', 'cms'))>_<current()>
+    postTitle: <randomElement(array('ruby', 'rails', 'javascript', 'jQuery', 'symfony', 'laravel', 'cms', 'ajax', 'python', 'django', 'drupal', 'php'))>_<current()>
     postContent: <sentence(50)>
     postImage: ruby<current()>
     postDate: <dateTimeBetween("-200 days", "now")>
+    postStatus: '50%? draft : published'
+    postCategory: '@category_ruby'
+    
+   

@@ -69,7 +69,7 @@ class Post {
   private $postCategory;
   
   /**
-   * @ORM\ManyToMany(targetEntity="Tag")
+   * @ORM\ManyToMany(targetEntity="Tag", cascade={"persist"})
    * @ORM\JoinTable(name="post_tag")
    */
   private $postTags;
@@ -243,6 +243,10 @@ class Post {
   
   public function getPostTags(){
     return $this->postTags;
+  }
+  
+  public function addTag(Tag $tag){
+    $this->postTags->add($tag);
   }
 }
 

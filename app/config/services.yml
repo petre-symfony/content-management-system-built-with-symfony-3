@@ -6,4 +6,5 @@ parameters:
 services:
   alice.processor.post:
     class: AppBundle\DataFixtures\Processor\PostProcessor
+    autowire: true
     tags: [ { name: hautelook_alice.alice.processor } ]
