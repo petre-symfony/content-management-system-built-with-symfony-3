@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Post
@@ -66,6 +67,16 @@ class Post {
    * @ORM\ManyToOne(targetEntity="Category")
    */
   private $postCategory;
+  
+  /**
+   * @ORM\ManyToMany(targetEntity="Tag")
+   * @ORM\JoinTable(name="post_tag")
+   */
+  private $postTags;
+  
+  public function __construct() {
+    $this->postTags = new ArrayCollection();
+  }
 
   /**
    * Get id
@@ -228,6 +239,10 @@ class Post {
    */
   public function getPostCategoryName(){
     return $this->postCategory->getCatTitle();
-  }  
+  } 
+  
+  public function getPostTags(){
+    return $this->postTags;
+  }
 }
 
