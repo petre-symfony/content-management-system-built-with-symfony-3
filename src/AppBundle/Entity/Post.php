@@ -245,6 +245,14 @@ class Post {
     return $this->postTags;
   }
   
+  public function getPostTagsName(){
+    $tagStringsArray = array_map(function(Tag $tag){
+      return $tag->getTagName();
+    }, $this->postTags->toArray());
+    return implode(', ', $tagStringsArray);
+
+  }
+  
   public function addTag(Tag $tag){
     $this->postTags->add($tag);
   }
