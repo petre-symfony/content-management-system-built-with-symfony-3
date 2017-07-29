@@ -55,6 +55,17 @@ class Post {
    */
   private $postDate;
 
+  /**
+   * @var string
+   *
+   * @ORM\Column(name="post_status", type="string", length=100)
+   */
+  private $postStatus;
+  
+  /**
+   * @ORM\ManyToOne(targetEntity="Category")
+   */
+  private $postCategory;
 
   /**
    * Get id
@@ -174,5 +185,49 @@ class Post {
   public function getPostDate(){
     return $this->postDate;
   }
+  
+  /**
+   * Set postStatus
+   *
+   * @param string $postStatus
+   *
+   * @return Post
+   */
+  public function setPostStatus($postStatus){
+    $this->postStatus = $postStatus;
+    return $this;
+  }
+  /**
+   * Get postStatus
+   *
+   * @return string
+   */
+  public function getPostStatus(){
+    return $this->postStatus;
+  }
+  /**
+   * Set Category
+   * @param Category $category
+   * @return Post
+   */
+  public function setPostCategory(Category $category = null){
+    $this->postCategory = $category;
+    return $this;
+  } 
+  
+  /**
+   * Get category
+   * @return Category
+   */
+  public function getPostCategory() {
+    return $this->postCategory;
+  }
+  
+  /**
+   * @return string
+   */
+  public function getPostCategoryName(){
+    return $this->postCategory->getCatTitle();
+  }  
 }
 
