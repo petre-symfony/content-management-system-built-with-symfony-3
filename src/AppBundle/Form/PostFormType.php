@@ -11,11 +11,19 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\CallbackTransformer;
+use AppBundle\Entity\Tag;
+use Doctrine\ORM\EntityManager;
+use Doctrine\Common\Collections\ArrayCollection;
+
 
 class PostFormType extends AbstractType {
-  /**
-   * {@inheritdoc}
-   */
+  private $em;
+  
+  public function __construct(EntityManager $em) {
+    $this->em = $em;
+  }
+  
   public function buildForm(FormBuilderInterface $builder, array $options){
     $builder
       ->add('postTitle', TextType::class)
@@ -35,9 +43,40 @@ class PostFormType extends AbstractType {
         ),
         'expanded' => TRUE  
       ))
-      ->add('postImage', FileType::class);
+      ->add('postImage', FileType::class)
+      ->add('postTags', TextType::class);
       
-        
+     
+    $builder
+      ->get('postTags')
+      ->addModelTransformer(new CallbackTransformer(
+        function ($tagsAsArray){
+          //transform the ArrayCollection to an array of strings
+          $tagStringsArray = array_map(function(Tag $tag){
+            return $tag->getTagName();
+          }, $tagsAsArray->toArray());
+          return implode(', ', $tagStringsArray);
+        },
+        function ($tagsAsString){
+          $tagNamesArray = explode(', ', $tagsAsString);
+          $tagsArrayCollection = new ArrayCollection();
+          
+          foreach($tagNamesArray as $key => $tagName){
+            $tag = $this->em->getRepository('AppBundle:Tag')->findOneBy(['tagName' => $tagName]);
+            
+            if (!$tag){
+              $tag = new Tag();
+              $tag->setTagName($tagName);
+              $this->em->persist($tag);
+              $this->em->flush();
+            }
+            
+            $tagsArrayCollection->add($tag);
+          }
+          
+          return $tagsArrayCollection;
+        }
+      ));        
   }
   /**
    * {@inheritdoc}

@@ -239,6 +239,20 @@ class Post {
     return $this->postTags;
   }
   
+  public function setPostTags($tags){
+    //start with this empty
+    $this->postTags->clear();
+    
+    foreach ($tags->toArray() as $key => $tag){
+      if ($this->postTags->contains($tag)){
+        continue;
+      }
+      $this->addTag($tag);
+    }
+    
+    return $this;
+  }
+  
   public function getPostTagsName(){
     $tagStringsArray = array_map(function(Tag $tag){
       return $tag->getTagName();

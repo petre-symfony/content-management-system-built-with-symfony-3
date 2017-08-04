@@ -8,3 +8,9 @@ services:
     class: AppBundle\DataFixtures\Processor\PostProcessor
     autowire: true
     tags: [ { name: hautelook_alice.alice.processor } ]
+    
+  app.form.type.post:
+    class: AppBundle\Form\PostFormType
+    autowire: true
+    tags: 
+      - {name: form.type}  
