@@ -10,6 +10,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  *
  * @ORM\Table(name="post")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\PostRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Post {
   /**
@@ -179,11 +180,11 @@ class Post {
    * Set postDate
    *
    * @param \DateTime $postDate
-   *
+   * @ORM\PrePersist
    * @return Post
    */
-  public function setPostDate($postDate){
-    $this->postDate = $postDate;
+  public function setPostDate(){
+    $this->postDate = new \DateTime();;
 
     return $this;
   }
