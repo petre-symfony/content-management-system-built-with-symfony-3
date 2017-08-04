@@ -8,6 +8,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Form\CategoryFormType;
 use AppBundle\Entity\Category;
+use AppBundle\Form\PostFormType;
+use AppBundle\Entity\Post;
 
 
 /**
@@ -30,5 +32,33 @@ class PostAdminController extends Controller{
         'posts' => $posts    
       )
     ); 
+  }
+  
+  /**
+   * @Route("/post/new", name="admin_new_post")
+   * 
+   */
+  public function newAction(Request $request){
+    $post = new Post();
+    $form = $this->createForm(PostFormType::class, $post);
+  
+    
+    // only handles data on POST
+    $form->handleRequest($request);
+    if ($form->isSubmitted() && $form->isValid()) {
+      $post = $form->getData();
+      $em = $this->getDoctrine()->getManager();
+      $em->persist($post);
+      $em->flush();
+      
+      return $this->redirectToRoute('admin_list_posts');
+    }
+    
+    return $this->render(
+      'admin/post/_form.html.twig', 
+      array(
+        'postForm' => $form->createView()
+      )
+    );
   }
 }
