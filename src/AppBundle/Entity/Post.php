@@ -69,7 +69,7 @@ class Post {
   private $postCategory;
   
   /**
-   * @ORM\ManyToMany(targetEntity="Tag", cascade={"persist"})
+   * @ORM\ManyToMany(targetEntity="Tag", inversedBy="tagPosts", fetch="EXTRA_LAZY")
    * @ORM\JoinTable(name="post_tag")
    */
   private $postTags;

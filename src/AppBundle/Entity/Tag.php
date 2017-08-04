@@ -3,6 +3,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Tag
@@ -26,6 +27,16 @@ class Tag {
      * @Assert\NotBlank()
   */
   private $tagName;
+  
+  /**
+   * @ORM\ManyToMany(targetEntity="Post", mappedBy="postTags", cascade={"persist"}, orphanRemoval=true)
+   * @ORM\JoinTable(name="post_tag")
+   */
+  private $tagPosts;
+  
+  public function __construct(){
+    $this->tagPosts = new ArrayCollection();
+  }
   
   public function getTagName(){
     return $this->tagName;
