@@ -9,4 +9,8 @@ namespace AppBundle\Repository;
  * repository methods below.
  */
 class CategoryRepository extends \Doctrine\ORM\EntityRepository {
+  public function createAlphabeticalQueryBuilder(){
+    return $this->createQueryBuilder('category')
+      ->orderBy('category.catTitle', 'ASC');
+  }
 }

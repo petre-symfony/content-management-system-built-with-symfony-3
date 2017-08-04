@@ -1,0 +1,41 @@
+{% form_theme postForm 'form/rows.html.twig' %}
+
+{{ form_start(postForm) }}
+  {{ form_errors(postForm) }}
+
+  {{ form_row(postForm.postTitle, {
+    'label': 'Post Name',
+    'attr': {
+      'placeholder': "Give this post a name",
+      'class' : 'form-control'
+    }
+    
+  }) }}
+  {{ form_row(postForm.postAuthor, {
+    'attr' : {
+      'placeholder': "Specify the author of this post",
+      'class' : 'form-control'
+    }
+  }) }}
+  {{ form_row(postForm.postContent, {
+    'attr' : {
+      'placeholder': "Fill in some content",
+      'class' : 'form-control'
+    }
+  }) }}
+  {{ form_row(postForm.postCategory, {
+    'attr' : {
+      'class' : 'form-control'
+    }
+  }) }}
+  {{ form_row(postForm.postImage) }}
+  {{ form_row(postForm.postStatus, {
+    'label' : 'Is Published?'
+  }) }}
+  
+
+  <div class="form-group">
+      <input type="submit" class="btn btn-primary" name="submit" value="Save" />
+  </div>
+
+{{ form_end(postForm) }}

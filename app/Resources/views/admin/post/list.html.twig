@@ -19,7 +19,7 @@
         <tr>
           <td>{{ post.postAuthor }}</td>
           <td>{{ post.postTitle }}</td>
-          <td>{{ post.getPostCategoryName() }}</td>
+          <td>{{ post.postCategory }}</td>
           <td>{{ post.postStatus }}</td>
           <td><img src="{{ asset('images/' ~ post.postImage) }}" alt="" class="img-responsive" /></td>
           <td>{{ post.getPostTagsName() }}</td>

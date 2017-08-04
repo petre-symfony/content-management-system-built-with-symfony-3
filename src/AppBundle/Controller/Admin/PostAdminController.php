@@ -51,11 +51,15 @@ class PostAdminController extends Controller{
       $em->persist($post);
       $em->flush();
       
+      $this->addFlash('success', 'Post created');
+      
       return $this->redirectToRoute('admin_list_posts');
+    }  else if ($form->isSubmitted() && !$form->isValid()){
+      $this->addFlash('failed', "fail to create post");
     }
     
     return $this->render(
-      'admin/post/_form.html.twig', 
+      'admin/post/new.html.twig', 
       array(
         'postForm' => $form->createView()
       )

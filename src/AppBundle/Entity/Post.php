@@ -234,12 +234,6 @@ class Post {
     return $this->postCategory;
   }
   
-  /**
-   * @return string
-   */
-  public function getPostCategoryName(){
-    return $this->postCategory->getCatTitle();
-  } 
   
   public function getPostTags(){
     return $this->postTags;

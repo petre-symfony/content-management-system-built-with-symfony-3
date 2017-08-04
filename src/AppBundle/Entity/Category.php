@@ -59,5 +59,9 @@ class Category {
   public function getCatTitle(){
     return $this->catTitle;
   }
+  
+  public function __toString() {
+    return $this->getCatTitle();
+  }
 }
 
