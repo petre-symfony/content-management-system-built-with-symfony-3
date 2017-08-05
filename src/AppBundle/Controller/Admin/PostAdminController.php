@@ -65,4 +65,40 @@ class PostAdminController extends Controller{
       )
     );
   }
+  
+  
+  /**
+   * @Route("/post/{id}/edit", name="admin_edit_post")
+   * 
+   */
+  public function editAction(Request $request, Post $post){
+    $form = $this->createForm(PostFormType::class, $post);
+  
+    $postImage = $post->getPostImage();
+    // only handles data on POST
+    $form->handleRequest($request);
+    if ($form->isSubmitted() && $form->isValid()) {
+      $post = $form->getData();
+      if (!$post->getPostImage()){
+        $post->setPostImage($postImage);
+      }
+      $em = $this->getDoctrine()->getManager();
+      
+      $em->persist($post);
+      $em->flush();
+      $this->addFlash('success', 'Post created');
+      
+      return $this->redirectToRoute('admin_list_posts');
+    } else if ($form->isSubmitted() && !$form->isValid()){
+      $this->addFlash('failed', "fail to create post");
+    }
+    
+    
+    return $this->render(
+      'admin/post/edit.html.twig', 
+      array(
+        'postForm' => $form->createView()
+      )
+    );
+  }
 }
