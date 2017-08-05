@@ -13,4 +13,9 @@ services:
     class: AppBundle\Form\PostFormType
     autowire: true
     tags: 
-      - {name: form.type}  
+      - {name: form.type} 
+      
+  app.post_image_uploader:
+    class: AppBundle\Service\FileUploader
+    arguments:
+      $targetDir: '%post_images_upload%'      
