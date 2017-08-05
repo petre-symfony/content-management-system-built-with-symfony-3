@@ -18,4 +18,11 @@ services:
   app.post_image_uploader:
     class: AppBundle\Service\FileUploader
     arguments:
-      $targetDir: '%post_images_upload%'      
+      $targetDir: '%post_images_upload%' 
+      
+  app.post_image_upload_listener:
+    class: AppBundle\EventListener\PostImageUploadListener
+    autowire: true
+    tags:
+      - { name: doctrine.event_listener, event: prePersist }
+      - { name: doctrine.event_listener, event: preUpdate }       
