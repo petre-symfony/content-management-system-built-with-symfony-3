@@ -43,7 +43,11 @@ class PostFormType extends AbstractType {
         ),
         'expanded' => TRUE  
       ))
-      ->add('postImage', FileType::class, array('data_class' => null, 'required' => false))
+      ->add('postImage', FileType::class, array(
+        'data_class' => null, 
+        'required' => false,
+        'image' => 'postImage'  
+      ))
       ->add('postTags', TextType::class, array('required' => false));
       
      

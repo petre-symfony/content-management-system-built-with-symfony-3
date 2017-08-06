@@ -25,4 +25,11 @@ services:
     autowire: true
     tags:
       - { name: doctrine.event_listener, event: prePersist }
-      - { name: doctrine.event_listener, event: preUpdate }       
+      - { name: doctrine.event_listener, event: preUpdate }  
+      
+  app.image_type_extension:
+    class: AppBundle\Form\Extension\ImageTypeExtension
+    tags:
+      - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FileType }
+
+  

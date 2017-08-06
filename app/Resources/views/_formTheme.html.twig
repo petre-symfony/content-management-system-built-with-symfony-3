@@ -1,0 +1,16 @@
+{% block form_row -%}
+  <div class="form-group cool-class{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
+    {{- form_label(form) -}}
+    {{- form_widget(form) -}}
+    {{- form_errors(form) -}}
+  </div>
+{%- endblock form_row %}
+
+{% block file_widget %}
+  {% spaceless %}
+    {{ block('form_widget') }}
+    {% if image is not null %}
+      <img src="{{ asset('images/' ~ image) }}"/>
+    {% endif %}
+  {% endspaceless %}
+{% endblock %}
